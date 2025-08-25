@@ -1,0 +1,39 @@
+package app;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class ZoneFormPanel extends JPanel {
+    public ZoneFormPanel() {
+        setLayout(new GridLayout(4, 2, 10, 10));
+
+        JTextField txtNom = new JTextField();
+        JTextField txtType = new JTextField();
+        JTextField txtHabitants = new JTextField();
+
+        JButton btnAjouter = new JButton("Ajouter");
+
+        add(new JLabel("Nom :"));
+        add(txtNom);
+        add(new JLabel("Type :"));
+        add(txtType);
+        add(new JLabel("Nombre d'habitants :"));
+        add(txtHabitants);
+        add(new JLabel(""));
+        add(btnAjouter);
+
+        btnAjouter.addActionListener(e -> {
+            try {
+                String nom = txtNom.getText();
+                String type = txtType.getText();
+                int habitants = Integer.parseInt(txtHabitants.getText());
+
+                ZoneGeographique zone = new ZoneGeographique(nom, type, habitants);
+                zone.enregistrerDansBDD();
+                JOptionPane.showMessageDialog(this, "✅ Zone ajoutée avec succès !");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "❌ Erreur : " + ex.getMessage());
+            }
+        });
+    }
+}
